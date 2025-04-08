@@ -1,0 +1,3 @@
+./build.sh
+alacritty -e gdb -ex "target remote localhost:1234" &
+./run.sh
