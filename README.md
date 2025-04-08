@@ -19,5 +19,5 @@ make run
 - Proper error handling
 - Support for multiple disks
 - Other drivers: Sound, USB, ...
-- Maybe a GUI?
+- Maybe a GUI?\
 I'm pretty sure there are a lot of other things to do but... eh, forgot them
