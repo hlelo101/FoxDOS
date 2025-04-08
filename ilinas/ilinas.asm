@@ -19,6 +19,18 @@ call init_idt
 call init_pit
 call init_ide
 
+; https://www.reddit.com/r/osdev/comments/70fcig/blinking_text/
+mov dx, 0x03DA
+in al, dx
+mov dx, 0x03C0
+mov al, 0x30
+out dx, al
+inc dx
+in al, dx
+and al, 0xF7
+dec dx
+out dx, al
+
 mov ah, 0x2F
 mov ebx, init_done_msg
 call print_string_pm
