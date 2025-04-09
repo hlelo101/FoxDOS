@@ -29,7 +29,14 @@ idt:
 	db 0 	; reserved
 	db 0x8E ; attribute
 	dw 0 	; isr_high
-	times 11 dq 0
+	times 6 dq 0
+	; Weird IRQ7
+	dw 0 	; isr_low 
+	dw 0x08	; code_segment
+	db 0 	; reserved
+	db 0x8E ; attribute
+	dw 0 	; isr_high
+	times 4 dq 0
 	; IDE drive
 	dw 0 	; isr_low 
 	dw 0x08	; code_segment
@@ -61,6 +68,20 @@ idtr:
 	dw idt_end - idt - 1
 	dd idt
 
+irq7_isr:
+	pusha
+	mov al, 0x0B
+	out 0x20, al
+	in al, 0x20
+	cmp al, 0x80
+	jne irq7_isr_end
+
+	mov al, 0x20
+	out 0x20, al
+irq7_isr_end:
+	popa
+	iret
+
 init_idt:
  	pusha
  	cli
@@ -80,6 +101,10 @@ init_idt:
  	lea eax, [ps2_keyboard_isr]
  	mov word [idt + 8*33], ax
 	mov word [idt + 8*33 + 32], dx
+	; IRQ7
+	lea eax, [irq7_isr]
+	mov word [idt + 8*39], ax
+	mov word [idt + 8*39 + 32], dx
 	; 0x40, Print char
 	lea eax, [print_char_isr]
 	mov word [idt + 8*64], ax
