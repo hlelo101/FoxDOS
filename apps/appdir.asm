@@ -9,7 +9,7 @@
 ; value describing the number of entries.
 ;
 ; The application directory must always be stored in
-; the 10th sector (10*512 bits).
+; the 10th sector (10*512 bytes).
 
 db 3 ; 3 entries
 ; 1st entry, the shell
