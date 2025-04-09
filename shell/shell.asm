@@ -76,7 +76,7 @@ print_linebreak:
 
 welcome_msg db "Welcome to the FoxDOS shell", 10, 0
 inputmsg db "FD> ", 0
-help_cmd_output1 db "        ### FoxDOS Help menu ###        ", 10, 0
+help_cmd_output1 db "            FoxDOS Help menu            ", 10, 0
 help_cmd_output2 db "CLS    - Clear the screen               ", 10,\
                     "HELP   - Display the help menu          ", 10,\
                     "VER    - Display the version            ", 10,\
