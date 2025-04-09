@@ -19,6 +19,8 @@ mov al, 0x53
 call change_color_attribute
 call get_input
 
+call print_linebreak
+
 ; VER command
 mov eax, ver_command
 call cmpstr
@@ -61,13 +63,21 @@ mov edx, ebx
 call str_to_int
 call start_app
 
-mov ebx, linebreak
-call print_string
+call print_linebreak
 jmp shell_loop
+
+print_linebreak:
+	push ebx
+	mov ebx, linebreak
+	call print_string
+	pop ebx
+	ret
+	
+
 welcome_msg db "Welcome to the FoxDOS shell", 10, 0
 inputmsg db "FD> ", 0
 help_cmd_output1 db "FoxDOS - Help menu", 10, 0 
-help_cmd_output2 db "CLS - Clear screen", 10, "HELP - Help menu", 10, "<NUM> - Start a program from its index", 10, 0
+help_cmd_output2 db "CLS   - Clear screen", 10, "HELP  - Help menu", 10, "<NUM> - Start a program from its index", 10, 0
 linebreak db 10, 0
 ; Commands
 ver_command		db "VER", 0

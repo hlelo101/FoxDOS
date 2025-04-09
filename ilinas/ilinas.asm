@@ -66,8 +66,8 @@ start_app_isr_not_found:
 	sti
 	iret
 
-init_done_msg db 'Successfully initialized.', 10, 0
-fox_dos_ascii_art db 'FFFF         DDD   OOO   SSS  ', 10, 'F            D  D O   O S     ', 10, 'FFF  ooo x x D  D O   O  SSS  ', 10, 'F    o o  x  D  D O   O     S ', 10, 'F    ooo x x DDD   OOO  SSSS  ', 10, 'Welcome to FoxDOS!', 10, 0
+init_done_msg db "Successfully initialized.", 10, 0
+fox_dos_ascii_art db "FFFF         DDD   OOO   SSS  ", 10, "F            D  D O   O S     ", 10, "FFF  ooo x x D  D O   O  SSS  ", 10, "F    o o  x  D  D O   O     S ", 10, "F    ooo x x DDD   OOO  SSSS  ", 10, "Welcome to FoxDOS!", 10, 0
 
 %include "functions/print32.asm"
 %include "apps/appdirparser.asm"

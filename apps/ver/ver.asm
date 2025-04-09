@@ -8,6 +8,6 @@ call print_string
 
 jmp exit
 
-ver_output db "FoxDOS Version 0.1.1", 10, "FoxDOS Shell version 0.1.0", 10, 0
+ver_output db "FoxDOS Version 0.1.3", 10, "FoxDOS Shell version 0.1.2", 10, 0
 
 %include "lib/foxlib.asm"

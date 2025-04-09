@@ -6,3 +6,4 @@ ata0-master: type=disk, path=disk.img, mode=flat
 boot:disk
 display_library: x, options = "gui_debug"
 com1: enabled=1, mode=disconnected
+magic_break: enabled = 1

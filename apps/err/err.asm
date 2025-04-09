@@ -30,6 +30,8 @@ je exit_prog
 jmp reset_ui
 
 exit_prog:
+mov ebx, lb
+call print_string
 call exit
 
 invalid_opcode:
@@ -49,3 +51,4 @@ options:
 	db "A. Division by 0", 10, "B. Crash from the kernel (int 0x25)", 10, "C. Invalid opcode", 10, "D. Exit"
 	times 18 db 10
 	db '> ', 0
+lb db 10, 0

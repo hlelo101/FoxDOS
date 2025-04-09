@@ -19,9 +19,13 @@ ps2_keyboard_isr:
     
 	mov al, 0x20
 	out 0x20, al
+	cmp dl, 1
+	je ps2_keyboard_isr_start_shell
 	popa
 	sti
 	iret
-
-key_pressed db 'Key pressed', 0
-to_print db 0
+ps2_keyboard_isr_start_shell:
+	popa
+	mov word [esp], new_key_start_shell
+	sti
+	iret

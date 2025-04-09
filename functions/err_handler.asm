@@ -16,5 +16,5 @@ error_handler_app_err:
 	mov al, 0
 	int 0x42
 
-error_msg db 'An fatal exception occured', 10, 'System stopped', 0
-app_error_msg db "The application commited a fault and has been terminated.", 10, "You will now be redirected to the shell.", 10, 0
+error_msg db "An fatal exception occured", 10, "System stopped", 0
+app_error_msg db 10, "The application commited a fault and has been terminated.", 10, "You will now be redirected to the shell.", 10, 0
