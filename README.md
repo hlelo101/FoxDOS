@@ -17,7 +17,6 @@ make run
 ```
 
 # TODO
-- Proper error handling
 - Support for multiple disks
 - Other drivers: Sound, USB, ...
 - Maybe a GUI?\

@@ -35,10 +35,6 @@ mov ah, 0x2F
 mov ebx, init_done_msg
 call print_string_pm
 
-mov ecx, 0x4000
-mov ebx, 11
-call ide_read
-
 mov al, 0
 mov dl, 1 ; Print the welcome message
 int 0x42

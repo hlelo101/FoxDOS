@@ -1,5 +1,5 @@
 error_handler_isr:
-	mov edx, [esp + 8]
+	mov edx, [esp]
 	cmp edx, 0x3000
 	jge error_handler_app_err
 	mov ebx, error_msg
