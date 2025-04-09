@@ -14,15 +14,18 @@ assemble:
 	$(AS) $(ASFLAGS) apps/appdir.asm -o appdir.bin		# App directory
 	$(AS) $(ASFLAGS) apps/ver/ver.asm -o ver.bin		# VER
 	$(AS) $(ASFLAGS) apps/third/third.asm -o third.bin	# Third
+	$(AS) $(ASFLAGS) apps/err/err.asm -o errapp.bin		# Third
 
 mkimg:
 	dd if=/dev/zero of=disk.img bs=1M count=7 conv=notrunc
 	dd if=boot.bin of=disk.img bs=512 seek=0 conv=notrunc
 	dd if=ilinas.bin of=disk.img bs=512 seek=1 conv=notrunc
+	dd if=appdir.bin of=disk.img bs=512 seek=10 conv=notrunc
+	
 	dd if=shell.bin of=disk.img bs=512 seek=8 conv=notrunc
 	dd if=ver.bin of=disk.img bs=512 seek=9 conv=notrunc
 	dd if=third.bin of=disk.img bs=512 seek=11 conv=notrunc
-	dd if=appdir.bin of=disk.img bs=512 seek=10 conv=notrunc
+	dd if=errapp.bin of=disk.img bs=512 seek=12 conv=notrunc
 
 clean:
 	rm *.bin

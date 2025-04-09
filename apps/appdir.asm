@@ -11,13 +11,16 @@
 ; The application directory must always be stored in
 ; the 10th sector (10*512 bytes).
 
-db 3 ; 3 entries
+db 4 ; 4 entries
 ; 1st entry, the shell
 dw 8 ; 8th sector
 dw 1 ; Takes 1 sector
 ; 2nd entry, ver
-dw 9 ; 9th sector
-dw 3 ; Takes 1 sector
+dw 9
+dw 3
 ; 3rd entry, the 3rd app
-dw 11 ; 11th sector
-dw 1 ; Takes 1 sector
+dw 11
+dw 1
+; 4th entry, error test app
+dw 12
+dw 1
