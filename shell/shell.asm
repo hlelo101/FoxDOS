@@ -39,6 +39,22 @@ call change_color_attribute
 call clear_screen
 jmp shell_loop
 cls_command_skip:
+; HELP command
+mov eax, help_command
+call cmpstr
+xor eax, eax
+cmp cl, 0
+je help_command_skip
+mov al, 0x70
+call change_color_attribute
+mov ebx, help_cmd_output1
+call print_string
+mov al, 0x07
+call change_color_attribute
+mov ebx, help_cmd_output2
+call print_string
+jmp shell_loop
+help_command_skip:
 
 ; Try to run the program
 mov edx, ebx
@@ -50,10 +66,13 @@ call print_string
 jmp shell_loop
 welcome_msg db "Welcome to the FoxDOS shell", 10, 0
 inputmsg db "FD> ", 0
+help_cmd_output1 db "FoxDOS - Help menu", 10, 0 
+help_cmd_output2 db "CLS - Clear screen", 10, "HELP - Help menu", 10, "<NUM> - Start a program from its index", 10, 0
 linebreak db 10, 0
 ; Commands
-ver_command db "VER", 0
-cls_command db "CLS", 0
+ver_command		db "VER", 0
+cls_command		db "CLS", 0
+help_command	db "HELP", 0
 
 %include "lib/foxlib.asm"
 %include "lib/foxutils.asm"
