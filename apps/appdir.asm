@@ -12,15 +12,15 @@
 ; the 10th sector (10*512 bytes).
 
 db 4 ; 4 entries
-; 1st entry, the shell
-dw 8 ; 8th sector
-dw 1 ; Takes 1 sector
-; 2nd entry, ver
-dw 9
+; Entry 0, the shell
+dw 11 ; 8th sector
+dw 2  ; Takes 2 sectors
+; Entry 1, ver
+dw 13
 dw 3
-; 3rd entry, the 3rd app
-dw 11
+; Entry 2, the 3rd app
+dw 9
 dw 1
-; 4th entry, error test app
-dw 12
+; Entry 3, error test app
+dw 14
 dw 1

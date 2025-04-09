@@ -47,16 +47,18 @@ start_app_isr:
 	call get_app
 	cmp bx, 0
 	je start_app_isr_not_found
+	
 	mov dx, bx
-read_loop:
 	mov ecx, 0x3000
 	mov ebx, eax
+read_loop:
 	call ide_read
 	
 	dec dx
+	inc ebx
 	add ecx, 512
 	cmp dx, 0
-	jnle read_loop
+	ja read_loop
 	popa
 	mov word [esp], 0x3000
 	sti

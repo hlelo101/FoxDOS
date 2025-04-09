@@ -22,10 +22,10 @@ mkimg:
 	dd if=ilinas.bin of=disk.img bs=512 seek=1 conv=notrunc
 	dd if=appdir.bin of=disk.img bs=512 seek=10 conv=notrunc
 	
-	dd if=shell.bin of=disk.img bs=512 seek=8 conv=notrunc
-	dd if=ver.bin of=disk.img bs=512 seek=9 conv=notrunc
-	dd if=third.bin of=disk.img bs=512 seek=11 conv=notrunc
-	dd if=errapp.bin of=disk.img bs=512 seek=12 conv=notrunc
+	dd if=third.bin of=disk.img bs=512 seek=9 conv=notrunc
+	dd if=shell.bin of=disk.img bs=512 seek=11 conv=notrunc
+	dd if=ver.bin of=disk.img bs=512 seek=13 conv=notrunc
+	dd if=errapp.bin of=disk.img bs=512 seek=14 conv=notrunc
 
 clean:
 	rm *.bin
