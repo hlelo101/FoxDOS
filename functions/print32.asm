@@ -131,6 +131,7 @@ print_char_isr:
 	cmp ah, 1
 	je print_char_isr_change_ca
 print_char_isr_clear_scr:
+	mov ah, [current_color_attribute]
 	call clear_screen
 print_char_isr_change_ca:
 	mov [current_color_attribute], al

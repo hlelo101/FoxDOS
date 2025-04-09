@@ -34,7 +34,10 @@ call cmpstr
 xor eax, eax
 cmp cl, 0
 je cls_command_skip
+mov al, 0x14
+call change_color_attribute
 call clear_screen
+jmp shell_loop
 cls_command_skip:
 
 ; Try to run the program
