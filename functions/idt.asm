@@ -1,72 +1,10 @@
 %include "functions/err_handler.asm"
 
-idt:
-	; Fill in the entries
-	%assign i 0
-	%rep 32
-	    dw 0
-	    dw 0x08              ; code segment
-	    db 0
-	    db 0x8E              ; present, ring 0, 32-bit int gate
-	    dw 0
-	%assign i i+1
-	%endrep
-	; PIT
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	; Keyboard
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	; IDE drive
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	times 6 dq 0
-	; Weird IRQ7
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	times 4 dq 0
-	; IDE drive
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	times 17 dq 0
-	; Print char
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	; Get input
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-	; Start app
-	dw 0 	; isr_low 
-	dw 0x08	; code_segment
-	db 0 	; reserved
-	db 0x8E ; attribute
-	dw 0 	; isr_high
-idt_end: 
+IDT equ 0x2200
 
 idtr:
-	dw idt_end - idt - 1
-	dd idt
+	dw 256*8 - 1
+	dd IDT
 
 irq7_isr:
 	pusha
@@ -82,41 +20,64 @@ irq7_isr_end:
 	popa
 	iret
 
+; EAX = ISR address
+; EBX = Index
+set_entry:
+	mov word [IDT + 8*ebx], ax
+	mov word [IDT + 8*ebx + 32], dx
+	ret
+
 init_idt:
  	pusha
  	cli
- 	; Set up the interrupts
- 	%assign i 0
- 	%rep 32
+ 	; Fill in the IDT
+ 	xor edx, edx
+ idt_fill_rep:
+ 	lea ebx, [edx + IDT]
+ 	
+ 	mov word [ebx], 0
+ 	mov word [ebx + 2], 0x08 ; Selector
+ 	mov byte [ebx + 4], 0
+ 	mov byte [ebx + 5], 0x8E ; Attribute + type
+ 	mov word [ebx + 6], 0
+
+ 	add edx, 8
+ 	cmp edx, 256*8
+ 	jl idt_fill_rep
+
+	xor edx, edx
+ err_handler_assign_loop:
  	lea eax, [error_handler_isr]
- 	mov word [idt + 8*i], ax
-	mov word [idt + 8*i + 32], dx
- 	%assign i i+1
- 	%endrep
+ 	mov word [IDT + 8*edx], ax
+	mov word [IDT + 8*edx + 32], dx
+	inc edx
+	cmp edx, 32
+	jl err_handler_assign_loop
+	
  	; IRQ0, PIT
  	lea eax, [pit_isr]
- 	mov word [idt + 8*32], ax
-	mov word [idt + 8*32 + 32], dx
+ 	mov ebx, 0x20
+ 	call set_entry
  	; IRQ1, PS/2 keyboard
  	lea eax, [ps2_keyboard_isr]
- 	mov word [idt + 8*33], ax
-	mov word [idt + 8*33 + 32], dx
+ 	mov ebx, 0x21
+ 	call set_entry
 	; IRQ7
 	lea eax, [irq7_isr]
-	mov word [idt + 8*39], ax
-	mov word [idt + 8*39 + 32], dx
+	mov ebx, 0x27
+	call set_entry
 	; 0x40, Print char
 	lea eax, [print_char_isr]
-	mov word [idt + 8*64], ax
-	mov word [idt + 8*64 + 32], dx
+	mov ebx, 0x40
+	call set_entry
 	; 0x41, Get input
 	lea eax, [input_isr]
-	mov word [idt + 8*65], ax
-	mov word [idt + 8*65 + 32], dx
+	mov ebx, 0x41
+	call set_entry
 	; 0x42, Start app
 	lea eax, [start_app_isr]
-	mov word [idt + 8*66], ax
-	mov word [idt + 8*66 + 32], dx
+	mov ebx, 0x42
+	call set_entry
 
 	; Save the masks in AL & CL
 	in al, 0x21
