@@ -4,7 +4,7 @@ A very simple 32-bit OS\
 When you first start FoxDOS, the shell starts. You can view the version using VER.\
 You can start a program by entering its index.\
 Note that the program index starts at 0, so the 3rd program would be launched by entering 2.\
-The program 1 is the shell, the program 2 is VER and the program 3... The third program. 
+The program 1 is the shell, the program 2 is VER, the program 3... The third program, and the program 4 an error handling testing app. 
 
 # Build
 To build FoxDOS, simply run
