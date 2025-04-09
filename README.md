@@ -1,4 +1,5 @@
 # FoxDOS
+![Screenshot of the FoxDOS UI](screenshot.png "FoxDOS")
 A very simple 32-bit OS\
 When you first start FoxDOS, the shell starts. You can view the version using VER.\
 You can start a program by entering its index.\
