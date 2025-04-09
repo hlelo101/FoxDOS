@@ -3,7 +3,7 @@ print_string:
 	pusha
 print_string_loop:
 	mov al, [ebx]
-	mov ah, 0 ; Mode (0 = Print, 1 = Change color attribute)
+	mov ah, 0 ; Mode
 	int 0x40
 	inc ebx
 	cmp byte [ebx], 0
@@ -38,3 +38,10 @@ exit:
 	int 0x42
 
 	jmp $
+
+clear_screen:
+	pusha
+	mov ah, 2
+	int 0x40
+	popa
+	ret

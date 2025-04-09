@@ -13,11 +13,11 @@
 
 db 3 ; 3 entries
 ; 1st entry, the shell
-dw 7 ; 7th sector
+dw 8 ; 8th sector
 dw 1 ; Takes 1 sector
 ; 2nd entry, ver
-dw 8 ; 8th sector
+dw 9 ; 9th sector
 dw 3 ; Takes 1 sector
 ; 3rd entry, the 3rd app
-dw 9 ; 9th sector
+dw 11 ; 11th sector
 dw 1 ; Takes 1 sector

@@ -23,7 +23,7 @@ loadFDOS:
     mov ch, 0 			; First cylinder
     mov dh, 0 			; First head
     mov cl, 02h 		; 2nd sector
-    mov al, 10 			; Read 10 sectors
+    mov al, 9 			; Read 10 sectors
  	; Set the destionation address
 	xor bx, bx
    	mov es, bx
@@ -80,7 +80,7 @@ init_protected_mode:
 	mov es, ax
 	mov fs, ax
 	mov gs, ax
-	mov ebp, 0x90000
+	mov ebp, 0xFFF
 	mov esp, ebp
 	jmp protected_mode
 

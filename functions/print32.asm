@@ -122,11 +122,16 @@ set_cursor_offset:
 	out dx, al
 	ret
 
-; Character in al, mode in ah (0 = Print, 1 = Change color attribute)
+; Character in al, mode in ah
+; (0 = Print, 1 = Change color attribute, 2 = Clear screen)
 print_char_isr:
 	pusha
 	cmp ah, 0
 	je print_char_isr_print
+	cmp ah, 1
+	je print_char_isr_change_ca
+print_char_isr_clear_scr:
+	call clear_screen
 print_char_isr_change_ca:
 	mov [current_color_attribute], al
 	jmp print_char_isr_done

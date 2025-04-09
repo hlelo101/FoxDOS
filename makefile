@@ -16,13 +16,13 @@ assemble:
 	$(AS) $(ASFLAGS) apps/third/third.asm -o third.bin	# Third
 
 mkimg:
-	dd if=boot.bin of=disk.img bs=512 seek=0
-	dd if=ilinas.bin of=disk.img bs=512 seek=1
-	dd if=shell.bin of=disk.img bs=512 seek=7
-	dd if=ver.bin of=disk.img bs=512 seek=8
-	dd if=third.bin of=disk.img bs=512 seek=9
-	dd if=appdir.bin of=disk.img bs=512 seek=10
-	dd if=/dev/zero of=disk.img bs=512 seek=11 count=32768
+	dd if=/dev/zero of=disk.img bs=1M count=7 conv=notrunc
+	dd if=boot.bin of=disk.img bs=512 seek=0 conv=notrunc
+	dd if=ilinas.bin of=disk.img bs=512 seek=1 conv=notrunc
+	dd if=shell.bin of=disk.img bs=512 seek=8 conv=notrunc
+	dd if=ver.bin of=disk.img bs=512 seek=9 conv=notrunc
+	dd if=third.bin of=disk.img bs=512 seek=11 conv=notrunc
+	dd if=appdir.bin of=disk.img bs=512 seek=10 conv=notrunc
 
 clean:
 	rm *.bin

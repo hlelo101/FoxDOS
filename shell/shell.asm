@@ -28,6 +28,14 @@ je ver_command_skip
 mov al, 1
 jmp start_app
 ver_command_skip:
+; CLS command
+mov eax, cls_command
+call cmpstr
+xor eax, eax
+cmp cl, 0
+je cls_command_skip
+call clear_screen
+cls_command_skip:
 
 ; Try to run the program
 mov edx, ebx
@@ -41,8 +49,8 @@ welcome_msg db "Welcome to the FoxDOS shell", 10, 0
 inputmsg db "FD> ", 0
 linebreak db 10, 0
 ; Commands
-; VER
 ver_command db "VER", 0
+cls_command db "CLS", 0
 
 %include "lib/foxlib.asm"
 %include "lib/foxutils.asm"

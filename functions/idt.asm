@@ -2,7 +2,15 @@
 
 idt:
 	; Fill in the entries
-	times 32 dq 0
+	%assign i 0
+	%rep 32
+	    dw 0
+	    dw 0x08              ; code segment
+	    db 0
+	    db 0x8E              ; present, ring 0, 32-bit int gate
+	    dw 0
+	%assign i i+1
+	%endrep
 	; PIT
 	dw 0 	; isr_low 
 	dw 0x08	; code_segment
@@ -53,7 +61,38 @@ idtr:
 	dw idt_end - idt - 1
 	dd idt
 
-init_pic:
+init_idt:
+ 	pusha
+ 	cli
+ 	; Set up the interrupts
+ 	%assign i 0
+ 	%rep 32
+ 	lea eax, [error_handler_isr]
+ 	mov word [idt + 8*i], ax
+	mov word [idt + 8*i + 32], dx
+ 	%assign i i+1
+ 	%endrep
+ 	; IRQ0, PIT
+ 	lea eax, [pit_isr]
+ 	mov word [idt + 8*32], ax
+	mov word [idt + 8*32 + 32], dx
+ 	; IRQ1, PS/2 keyboard
+ 	lea eax, [ps2_keyboard_isr]
+ 	mov word [idt + 8*33], ax
+	mov word [idt + 8*33 + 32], dx
+	; 0x40, Print char
+	lea eax, [print_char_isr]
+	mov word [idt + 8*64], ax
+	mov word [idt + 8*64 + 32], dx
+	; 0x41, Get input
+	lea eax, [input_isr]
+	mov word [idt + 8*65], ax
+	mov word [idt + 8*65 + 32], dx
+	; 0x42, Start app
+	lea eax, [start_app_isr]
+	mov word [idt + 8*66], ax
+	mov word [idt + 8*66 + 32], dx
+
 	; Save the masks in AL & CL
 	in al, 0x21
 	mov [mask1], al
@@ -82,34 +121,7 @@ init_pic:
 	out 0x21, al
 	mov al, mask2
 	out 0xA1, al
-	ret
-
-init_idt:
- 	pusha
- 	cli
- 	; Set up the interrupts
- 	; IRQ0, PIT
- 	lea eax, [pit_isr]
- 	mov word [idt + 8*32], ax
-	mov word [idt + 8*32 + 32], dx
- 	; IRQ1, PS/2 keyboard
- 	lea eax, [ps2_keyboard_isr]
- 	mov word [idt + 8*33], ax
-	mov word [idt + 8*33 + 32], dx
-	; 0x40, Print char
-	lea eax, [print_char_isr]
-	mov word [idt + 8*64], ax
-	mov word [idt + 8*64 + 32], dx
-	; 0x41, Get input
-	lea eax, [input_isr]
-	mov word [idt + 8*65], ax
-	mov word [idt + 8*65 + 32], dx
-	; 0x42, Start app
-	lea eax, [start_app_isr]
-	mov word [idt + 8*66], ax
-	mov word [idt + 8*66 + 32], dx
-
-	call init_pic
+	
  	; Unmask IRQ0, IRQ1
  	mov al, 0xFC
  	out 0x21, al
