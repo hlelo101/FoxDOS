@@ -1,10 +1,20 @@
 # FoxDOS
 ![Screenshot of the FoxDOS UI](screenshot.png "FoxDOS")
-A very simple 32-bit OS\
+A very simple 32-bit OS made to have fun with computers
+
 When you first start FoxDOS, the shell starts. You can view the version using VER.\
 You can start a program by entering its index.\
-Note that the program index starts at 0, so the 3rd program would be launched by entering 2.\
-The program 1 is the shell, the program 2 is VER, the program 3... The third program, and the program 4 an error handling testing app. 
+Note that the program index starts at 0, so the 3rd program would be launched by entering 2.
+
+Here's a list of every programs: 
+| Index | App Name    |
+|:--:|-------------|
+| 0  | Shell       |
+| 1  | VER         |
+| 2  | The 3rd app |
+| 3  | Err app     |
+| 4  | memEdit     |
+
 
 # Build
 To build FoxDOS, simply run
