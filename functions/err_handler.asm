@@ -9,7 +9,7 @@ error_handler_isr:
 	jmp $
 error_handler_app_err:
 	; Pop the things the CPU pushed
-	add esp, 12
+	mov esp, ebp
 	mov ebx, app_error_msg
 	mov ah, 0x4F
 	call print_string_pm

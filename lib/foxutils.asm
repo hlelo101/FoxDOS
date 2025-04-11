@@ -47,3 +47,52 @@ str_to_int_loop:
 str_to_int_done:
 	pop ecx
 	ret
+
+; ### Options ###
+; AX: Integer
+; EBX: Pointer to the buffer where the string will be stored
+hex_to_char_table:
+    db "0123456789ABCDEF", 0
+hex_to_char:
+	pusha
+	movzx ecx, al
+	shr cl, 4
+	mov dl, [hex_to_char_table + ecx]
+	mov [ebx], dl
+	movzx ecx, al
+	and cl, 0Fh
+	mov dl, [hex_to_char_table + ecx]
+	mov [ebx+1], dl
+	mov byte [ebx+2], 0
+	popa
+	ret
+
+; EAX = number to convert
+; EBX = pointer to output buffer
+int_to_string:
+    push ecx
+    push edx
+    push esi
+    xor ecx, ecx
+    mov esi, ebx
+int_to_string_loop:
+    xor edx, edx
+    mov ebx, 10
+    div ebx
+    add dl, '0'
+    push edx
+    inc ecx
+    test eax, eax
+    jnz int_to_string_loop
+int_to_string_write:
+    pop edx
+    mov [esi], dl
+    inc esi
+    loop int_to_string_write
+
+    mov byte [esi], 0
+
+    pop esi
+    pop edx
+    pop ecx
+    ret

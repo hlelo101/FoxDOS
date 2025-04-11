@@ -123,16 +123,35 @@ set_cursor_offset:
 	ret
 
 ; Character in al, mode in ah
-; (0 = Print, 1 = Change color attribute, 2 = Clear screen)
+; 0 = Print, 1 = Change color attribute
+; 2 = Clear screen, 3 = Set position
 print_char_isr:
 	pusha
 	cmp ah, 0
 	je print_char_isr_print
 	cmp ah, 1
 	je print_char_isr_change_ca
+	cmp ah, 2
+	je print_char_isr_clear_scr
+print_char_isr_set_cursor_pos:
+	mov ax, cx
+	push eax
+	push ebx
+	call set_cursor_coordinates
+	pop ebx
+	pop eax
+	movzx eax, ax
+	movzx ebx, bx
+	imul eax, 80
+	add eax, ebx
+	shl eax, 1
+	add eax, VIDEO_MEM_ADDR
+	mov [video_offset], eax
+	jmp print_char_isr_done
 print_char_isr_clear_scr:
 	mov ah, [current_color_attribute]
 	call clear_screen
+	jmp print_char_isr_done
 print_char_isr_change_ca:
 	mov [current_color_attribute], al
 	jmp print_char_isr_done

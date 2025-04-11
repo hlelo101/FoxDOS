@@ -8,14 +8,14 @@ DBGFLAGS = -ex
 all: assemble mkimg clean
 
 assemble:
-	$(AS) $(ASFLAGS) boot.asm -o boot.bin				# Bootloader
-	$(AS) $(ASFLAGS) ilinas/ilinas.asm -o ilinas.bin	# Kernel
-	$(AS) $(ASFLAGS) shell/shell.asm -o shell.bin		# Shell
-	$(AS) $(ASFLAGS) apps/appdir.asm -o appdir.bin		# App directory
-	$(AS) $(ASFLAGS) apps/ver/ver.asm -o ver.bin		# VER
-	$(AS) $(ASFLAGS) apps/third/third.asm -o third.bin	# Third
-	$(AS) $(ASFLAGS) apps/err/err.asm -o errapp.bin		# Third
-
+	$(AS) $(ASFLAGS) boot.asm -o boot.bin						# Bootloader
+	$(AS) $(ASFLAGS) ilinas/ilinas.asm -o ilinas.bin			# Kernel
+	$(AS) $(ASFLAGS) shell/shell.asm -o shell.bin				# Shell
+	$(AS) $(ASFLAGS) apps/appdir.asm -o appdir.bin				# App directory
+	$(AS) $(ASFLAGS) apps/ver/ver.asm -o ver.bin				# VER
+	$(AS) $(ASFLAGS) apps/third/third.asm -o third.bin			# Third
+	$(AS) $(ASFLAGS) apps/err/err.asm -o errapp.bin				# Err tester
+	$(AS) $(ASFLAGS) apps/memedit/memedit.asm -o memedit.bin	# memEdit
 mkimg:
 	dd if=/dev/zero of=disk.img bs=1M count=7 conv=notrunc
 	dd if=boot.bin of=disk.img bs=512 seek=0 conv=notrunc
@@ -26,6 +26,8 @@ mkimg:
 	dd if=shell.bin of=disk.img bs=512 seek=11 conv=notrunc
 	dd if=ver.bin of=disk.img bs=512 seek=13 conv=notrunc
 	dd if=errapp.bin of=disk.img bs=512 seek=14 conv=notrunc
+	dd if=memedit.bin of=disk.img bs=512 seek=15 conv=notrunc
+	# NOTE: memedit takes 3 sectors
 
 clean:
 	rm *.bin

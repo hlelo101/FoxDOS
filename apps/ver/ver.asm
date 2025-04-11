@@ -10,7 +10,7 @@ jmp exit
 
 ver_output db "Component     |  Version", 10,\
               "------------------------", 10,\
-              "FoxDOS        |  v0.1.3 ", 10,\
+              "FoxDOS        |  v0.1.4 ", 10,\
               "FoxDOS Shell  |  v0.1.3 ", 10, 0
 
 %include "lib/foxlib.asm"

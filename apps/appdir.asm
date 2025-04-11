@@ -11,16 +11,19 @@
 ; The application directory must always be stored in
 ; the 10th sector (10*512 bytes).
 
-db 4 ; 4 entries
+db 5 ; 5 entries
 ; Entry 0, the shell
 dw 11 ; 8th sector
 dw 2  ; Takes 2 sectors
 ; Entry 1, ver
 dw 13
-dw 3
+dw 1
 ; Entry 2, the 3rd app
 dw 9
 dw 1
 ; Entry 3, error test app
 dw 14
 dw 1
+; Entry 4, memEdit
+dw 15
+dw 3

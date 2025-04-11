@@ -18,10 +18,11 @@ new_key:
 	je new_key_ctrl_released
 	cmp al, 32
 	je d_pressed
-
-	new_key_ctrld_skip:
+new_key_ctrld_skip:
 	test al, 0x80
-	jnz input_in_progress_done
+	jnz new_key_release
+	; Mark the key as pressed
+	mov byte [keys_pressed + eax], 1
 
     cmp byte [input_in_progress], 0
     je input_in_progress_done
@@ -67,6 +68,10 @@ d_pressed:
 	mov dl, 1
 new_user_key_clear:
     mov byte [input_in_progress], 0
+    jmp input_in_progress_done
+new_key_release:
+	sub al, 0x80
+	mov byte [keys_pressed + eax], 0
 input_in_progress_done:
 	mov byte [input_buffer + si], 0
     ret
@@ -76,7 +81,12 @@ new_key_start_shell:
 	int 0x42
 
 ; Input ISR
+; ### Mode ###
+; AH = 1: Get string
+; AH = 2: Get key
 input_isr:
+    cmp ah, 2
+    je input_isr_get_key
     sti
     mov byte [input_in_progress], 1
 input_loop:
@@ -86,6 +96,10 @@ input_loop:
     mov word [input_buffer_index], 0
     mov ebx, input_buffer
     iret
+input_isr_get_key:
+	and ebx, 0xFF
+	mov al, [keys_pressed + ebx]
+	iret
 
 kbd_enabled db 0x01	; 0x01: Enabled, 0x00: Disabled
 scancode_table_uppercase db '²1234567890  ', 8, ' AZERTYUIOP  ', 10, ' QSDFGHJKLM    WXCVBN?./§         '
@@ -93,3 +107,4 @@ input_in_progress db 0 ; 0: No, 1: Yes
 input_buffer times 50 db 0
 input_buffer_index dw 0
 ctrl_pressed db 0
+keys_pressed times 127 db 0

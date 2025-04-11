@@ -19,5 +19,6 @@ make run
 # TODO
 - Support for multiple disks
 - Other drivers: Sound, USB, ...
+- Custom executable format
 - Maybe a GUI?\
 I'm pretty sure there are a lot of other things to do but... eh, forgot them

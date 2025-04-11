@@ -45,3 +45,16 @@ clear_screen:
 	int 0x40
 	popa
 	ret
+
+; BL = Key scancode
+check_key:
+	mov ah, 2
+	int 0x41
+	ret
+
+; CX: Cursor Y
+; BX: Cursor X
+change_cursor_loc:
+	mov ah, 3
+	int 0x40 
+	ret
