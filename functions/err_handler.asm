@@ -2,6 +2,7 @@ error_handler_isr:
 	mov edx, [esp]
 	cmp edx, 0x3000
 	jge error_handler_app_err
+	cli
 	mov ebx, error_msg
 	mov ah, 0x4F
 	call clear_screen

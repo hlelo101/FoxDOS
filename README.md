@@ -7,13 +7,14 @@ You can start a program by entering its index.\
 Note that the program index starts at 0, so the 3rd program would be launched by entering 2.
 
 Here's a list of every programs: 
-| Index | App Name    |
+| Index | App Name |
 |:--:|-------------|
 | 0  | Shell       |
 | 1  | VER         |
 | 2  | The 3rd app |
 | 3  | Err app     |
 | 4  | memEdit     |
+| 5  | INT         |
 
 
 # Build
