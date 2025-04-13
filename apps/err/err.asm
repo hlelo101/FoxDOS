@@ -32,7 +32,7 @@ jmp reset_ui
 exit_prog:
 mov ebx, lb
 call print_string
-call exit
+jmp exit
 
 invalid_opcode:
 db 0x23

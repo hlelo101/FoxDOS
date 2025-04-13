@@ -61,7 +61,7 @@ help_command_skip:
 ; Try to run the program
 mov edx, ebx
 call str_to_int
-call start_app
+jmp start_app
 
 call print_linebreak
 jmp shell_loop

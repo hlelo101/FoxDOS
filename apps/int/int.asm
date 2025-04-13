@@ -17,7 +17,7 @@ int_inst:
 
 mov ebx, newline
 call print_string
-call exit
+jmp exit
 
 enter_num db "Enter the interrupt number", 10, "int ", 0
 newline db 10, 0
