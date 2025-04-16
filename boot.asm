@@ -9,7 +9,7 @@ mov [boot_drive], dl
 ; Print boot message
 mov si, msg
 call print_string
-; Should now be loaded at 0x7E00
+; Should now be loaded at KERNEL_ADDR
 call loadFDOS
 call load_gdt
 mov si, gdt_loaded
@@ -23,7 +23,7 @@ loadFDOS:
     mov ch, 0 			; First cylinder
     mov dh, 0 			; First head
     mov cl, 02h 		; 2nd sector
-    mov al, 9 			; Read 10 sectors
+    mov al, 9 			; Read 9 sectors
  	; Set the destionation address
 	xor bx, bx
    	mov es, bx
@@ -85,8 +85,7 @@ init_protected_mode:
 	jmp protected_mode
 
 protected_mode:
-	; In here is everything after 32 bit protected mode has been loaded
-	; The video memory address is 0xB8000
+	; At this point, protected mode should be enabled
 	jmp KERNEL_ADDR
 
 	jmp $
