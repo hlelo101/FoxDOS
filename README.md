@@ -27,6 +27,10 @@ To run it with QEMU, run
 make run
 ```
 
+# Known issues
+**memEdit not working after an app exited with an exception**
+> If an app crashes, memEdit will stop working for... some reason. The easiest way to test this issue is by using the Err App (index 3).
+
 # TODO
 - Support for multiple disks
 - Other drivers: Sound, USB, ...
