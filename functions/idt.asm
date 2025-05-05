@@ -78,6 +78,10 @@ init_idt:
 	lea eax, [start_app_isr]
 	mov ebx, 0x42
 	call set_entry
+	; 0x43, System disk
+	lea eax, [disk_read_isr]
+	mov ebx, 0x43
+	call set_entry
 
 	; Save the masks in AL & CL
 	in al, 0x21

@@ -118,6 +118,14 @@ ide_read_loop:
 	sti
 	ret
 
+; From: EBX
+; To:   ECX
+disk_read_isr:
+	pusha
+	call ide_read
+	popa
+	iret
+
 ide_interrupt_msg db '[IDE]: New interrupt', 10, 0
 ide_not_ata_err_msg db '[IDE]: Error: The IDE drive is not an ATA drive', 10, 0
 ide_lba_supported_msg db '[IDE]: LBA addressing supported', 10, 0

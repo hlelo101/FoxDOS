@@ -58,3 +58,10 @@ change_cursor_loc:
 	mov ah, 3
 	int 0x40 
 	ret
+
+; From: EBX
+; To:   ECX
+read_disk:
+	int 0x43
+	ret
+	

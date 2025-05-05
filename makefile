@@ -17,6 +17,7 @@ assemble:
 	$(AS) $(ASFLAGS) apps/err/err.asm -o errapp.bin				# Err tester
 	$(AS) $(ASFLAGS) apps/memedit/memedit.asm -o memedit.bin	# memEdit
 	$(AS) $(ASFLAGS) apps/int/int.asm -o int.bin				# int
+	$(AS) $(ASFLAGS) apps/rfd/rfd.asm -o rfd.bin				# Read from disk
 mkimg:
 	dd if=/dev/zero of=disk.img bs=1M count=7 conv=notrunc
 	dd if=boot.bin of=disk.img bs=512 seek=0 conv=notrunc
@@ -29,6 +30,7 @@ mkimg:
 	dd if=errapp.bin of=disk.img bs=512 seek=14 conv=notrunc
 	dd if=memedit.bin of=disk.img bs=512 seek=15 conv=notrunc
 	dd if=int.bin of=disk.img bs=512 seek=19 conv=notrunc
+	dd if=rfd.bin of=disk.img bs=512 seek=20 conv=notrunc
 
 clean:
 	rm *.bin

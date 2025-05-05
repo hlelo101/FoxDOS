@@ -1,7 +1,7 @@
 megs: 64
 
-romimage: file=/home/helois/Documents/barefoxos/Bochs/BIOS-bochs-latest
-vgaromimage: file=/home/helois/Documents/barefoxos/Bochs/VGABIOS-lgpl-latest
+romimage: file=Bochs/BIOS-bochs-latest
+vgaromimage: file=Bochs/VGABIOS-lgpl-latest
 ata0-master: type=disk, path=disk.img, mode=flat
 boot:disk
 display_library: x, options = "gui_debug"

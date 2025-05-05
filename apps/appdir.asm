@@ -11,7 +11,7 @@
 ; The application directory must always be stored in
 ; the 10th sector (10*512 bytes).
 
-db 6 ; 6 entries
+db 7 ; 7 entries
 ; Entry 0, the shell
 dw 11 ; 8th sector
 dw 2  ; Takes 2 sectors
@@ -29,4 +29,7 @@ dw 15
 dw 3
 ; Entry 5, int
 dw 19
+dw 1
+; Entry 6, RFD
+dw 20
 dw 1
