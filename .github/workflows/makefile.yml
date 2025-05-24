@@ -23,5 +23,5 @@ jobs:
     - name: Upload build artifact
       uses: actions/upload-artifact@v4
       with:
-        name: foxdos-iso
+        name: foxdos-img
         path: ./disk.img
